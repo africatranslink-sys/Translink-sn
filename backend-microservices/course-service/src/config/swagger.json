@@ -1,0 +1,232 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Translink-Africa API",
+    "version": "1.0.0",
+    "description": "API pour la plateforme logistique Translink-Africa"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000",
+      "description": "Serveur local"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/api/auth/register": {
+      "post": {
+        "summary": "Inscription d'un utilisateur",
+        "tags": ["Auth"],
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nom": { "type": "string" },
+                  "telephone_whatsapp": { "type": "string" },
+                  "email": { "type": "string" },
+                  "mot_de_passe": { "type": "string" },
+                  "ville": { "type": "string" },
+                  "role": { "type": "string", "enum": ["CHAUFFEUR", "ENTREPRISE", "CHARGEUR"] }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Utilisateur créé avec succès" }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "summary": "Connexion",
+        "tags": ["Auth"],
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "telephone_whatsapp": { "type": "string" },
+                  "mot_de_passe": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Connexion réussie" }
+        }
+      }
+    },
+    "/api/documents/upload": {
+      "post": {
+        "summary": "Téléverser un document KYC",
+        "tags": ["Documents"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type_document": { "type": "string" },
+                  "document": { "type": "string", "format": "binary" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Document téléversé avec succès" }
+        }
+      }
+    },
+    "/api/annonces/demandes": {
+      "post": {
+        "summary": "Publier une demande de transport (Chargeur)",
+        "tags": ["Annonces"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ville_depart": { "type": "string" },
+                  "ville_arrivee": { "type": "string" },
+                  "nature_marchandise": { "type": "string" },
+                  "tonnage": { "type": "number" },
+                  "type_camion_requis": { "type": "string" },
+                  "date_chargement": { "type": "string", "format": "date" },
+                  "prix_propose": { "type": "number" }
+                }
+              }
+            },
+            "/api/chats": {
+              "get": {
+                "summary": "Lister les conversations de négociation",
+                "description": "Les événements Socket.IO associés sont chat:join, chat:leave, chat:send-message, chat:new-message, chat:send-proposal, chat:new-proposal, chat:proposal-updated, chat:conversation-updated et chat:new-conversation.",
+                "tags": ["Négociations"],
+                "parameters": [
+                  {
+                    "name": "demande_id",
+                    "in": "query",
+                    "schema": { "type": "integer" }
+                  }
+                ],
+                "responses": {
+                  "200": { "description": "Conversations accessibles à l’utilisateur" }
+                }
+              },
+              "post": {
+                "summary": "Démarrer une négociation pour un camion",
+                "tags": ["Négociations"],
+                "requestBody": {
+                  "required": true,
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "type": "object",
+                        "required": ["demande_id", "camion_id"],
+                        "properties": {
+                          "demande_id": { "type": "integer" },
+                          "camion_id": { "type": "integer" },
+                          "chauffeur_id": { "type": "integer" }
+                        }
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": { "description": "Conversation créée ou existante" }
+                }
+              }
+            },
+            "/api/chats/{id}/messages": {
+              "get": {
+                "summary": "Charger les messages et propositions d’une conversation",
+                "tags": ["Négociations"],
+                "parameters": [
+                  { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+                ],
+                "responses": {
+                  "200": { "description": "Historique de la conversation" }
+                }
+              }
+            },
+            "/api/chats/{id}/proposals/{proposalId}/accept": {
+              "post": {
+                "summary": "Accepter un prix et affecter le camion",
+                "tags": ["Négociations"],
+                "parameters": [
+                  { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } },
+                  { "name": "proposalId", "in": "path", "required": true, "schema": { "type": "integer" } }
+                ],
+                "responses": {
+                  "200": { "description": "Prix convenu et course créée" }
+                }
+              }
+            },
+            "/api/chats/{id}/proposals/{proposalId}/reject": {
+              "post": {
+                "summary": "Refuser une proposition de prix",
+                "tags": ["Négociations"],
+                "parameters": [
+                  { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } },
+                  { "name": "proposalId", "in": "path", "required": true, "schema": { "type": "integer" } }
+                ],
+                "responses": {
+                  "200": { "description": "Proposition refusée" }
+                }
+              }
+            },
+            "/api/courses/{id}/cancel": {
+              "delete": {
+                "summary": "Annuler une course avant le chargement",
+                "description": "Réservé au chargeur. Refusé si le chargement a commencé ou si un paiement est en cours ou validé.",
+                "tags": ["Courses"],
+                "parameters": [
+                  { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+                ],
+                "responses": {
+                  "200": { "description": "Course annulée" },
+                  "409": { "description": "Course commencée ou paiement déjà engagé" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Demande publiée" }
+        }
+      },
+      "get": {
+        "summary": "Voir les demandes actives",
+        "tags": ["Annonces"],
+        "responses": {
+          "200": { "description": "Liste des demandes" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,65 @@
+.country-flag {
+  display: inline-block;
+  width: 1.333333em;
+  line-height: 1em;
+  aspect-ratio: 4 / 3;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  vertical-align: middle;
+}
+
+.country-flag-za { background-image: url('../../node_modules/flag-icons/flags/4x3/za.svg'); }
+.country-flag-dz { background-image: url('../../node_modules/flag-icons/flags/4x3/dz.svg'); }
+.country-flag-ao { background-image: url('../../node_modules/flag-icons/flags/4x3/ao.svg'); }
+.country-flag-bj { background-image: url('../../node_modules/flag-icons/flags/4x3/bj.svg'); }
+.country-flag-bw { background-image: url('../../node_modules/flag-icons/flags/4x3/bw.svg'); }
+.country-flag-bf { background-image: url('../../node_modules/flag-icons/flags/4x3/bf.svg'); }
+.country-flag-bi { background-image: url('../../node_modules/flag-icons/flags/4x3/bi.svg'); }
+.country-flag-cm { background-image: url('../../node_modules/flag-icons/flags/4x3/cm.svg'); }
+.country-flag-cv { background-image: url('../../node_modules/flag-icons/flags/4x3/cv.svg'); }
+.country-flag-km { background-image: url('../../node_modules/flag-icons/flags/4x3/km.svg'); }
+.country-flag-ci { background-image: url('../../node_modules/flag-icons/flags/4x3/ci.svg'); }
+.country-flag-dj { background-image: url('../../node_modules/flag-icons/flags/4x3/dj.svg'); }
+.country-flag-eg { background-image: url('../../node_modules/flag-icons/flags/4x3/eg.svg'); }
+.country-flag-er { background-image: url('../../node_modules/flag-icons/flags/4x3/er.svg'); }
+.country-flag-sz { background-image: url('../../node_modules/flag-icons/flags/4x3/sz.svg'); }
+.country-flag-et { background-image: url('../../node_modules/flag-icons/flags/4x3/et.svg'); }
+.country-flag-ga { background-image: url('../../node_modules/flag-icons/flags/4x3/ga.svg'); }
+.country-flag-gm { background-image: url('../../node_modules/flag-icons/flags/4x3/gm.svg'); }
+.country-flag-gh { background-image: url('../../node_modules/flag-icons/flags/4x3/gh.svg'); }
+.country-flag-gn { background-image: url('../../node_modules/flag-icons/flags/4x3/gn.svg'); }
+.country-flag-gw { background-image: url('../../node_modules/flag-icons/flags/4x3/gw.svg'); }
+.country-flag-gq { background-image: url('../../node_modules/flag-icons/flags/4x3/gq.svg'); }
+.country-flag-ke { background-image: url('../../node_modules/flag-icons/flags/4x3/ke.svg'); }
+.country-flag-ls { background-image: url('../../node_modules/flag-icons/flags/4x3/ls.svg'); }
+.country-flag-lr { background-image: url('../../node_modules/flag-icons/flags/4x3/lr.svg'); }
+.country-flag-ly { background-image: url('../../node_modules/flag-icons/flags/4x3/ly.svg'); }
+.country-flag-mg { background-image: url('../../node_modules/flag-icons/flags/4x3/mg.svg'); }
+.country-flag-mw { background-image: url('../../node_modules/flag-icons/flags/4x3/mw.svg'); }
+.country-flag-ml { background-image: url('../../node_modules/flag-icons/flags/4x3/ml.svg'); }
+.country-flag-ma { background-image: url('../../node_modules/flag-icons/flags/4x3/ma.svg'); }
+.country-flag-mu { background-image: url('../../node_modules/flag-icons/flags/4x3/mu.svg'); }
+.country-flag-mr { background-image: url('../../node_modules/flag-icons/flags/4x3/mr.svg'); }
+.country-flag-mz { background-image: url('../../node_modules/flag-icons/flags/4x3/mz.svg'); }
+.country-flag-na { background-image: url('../../node_modules/flag-icons/flags/4x3/na.svg'); }
+.country-flag-ne { background-image: url('../../node_modules/flag-icons/flags/4x3/ne.svg'); }
+.country-flag-ng { background-image: url('../../node_modules/flag-icons/flags/4x3/ng.svg'); }
+.country-flag-ug { background-image: url('../../node_modules/flag-icons/flags/4x3/ug.svg'); }
+.country-flag-cf { background-image: url('../../node_modules/flag-icons/flags/4x3/cf.svg'); }
+.country-flag-cd { background-image: url('../../node_modules/flag-icons/flags/4x3/cd.svg'); }
+.country-flag-cg { background-image: url('../../node_modules/flag-icons/flags/4x3/cg.svg'); }
+.country-flag-rw { background-image: url('../../node_modules/flag-icons/flags/4x3/rw.svg'); }
+.country-flag-st { background-image: url('../../node_modules/flag-icons/flags/4x3/st.svg'); }
+.country-flag-sn { background-image: url('../../node_modules/flag-icons/flags/4x3/sn.svg'); }
+.country-flag-sc { background-image: url('../../node_modules/flag-icons/flags/4x3/sc.svg'); }
+.country-flag-sl { background-image: url('../../node_modules/flag-icons/flags/4x3/sl.svg'); }
+.country-flag-so { background-image: url('../../node_modules/flag-icons/flags/4x3/so.svg'); }
+.country-flag-sd { background-image: url('../../node_modules/flag-icons/flags/4x3/sd.svg'); }
+.country-flag-ss { background-image: url('../../node_modules/flag-icons/flags/4x3/ss.svg'); }
+.country-flag-tz { background-image: url('../../node_modules/flag-icons/flags/4x3/tz.svg'); }
+.country-flag-td { background-image: url('../../node_modules/flag-icons/flags/4x3/td.svg'); }
+.country-flag-tg { background-image: url('../../node_modules/flag-icons/flags/4x3/tg.svg'); }
+.country-flag-tn { background-image: url('../../node_modules/flag-icons/flags/4x3/tn.svg'); }
+.country-flag-zm { background-image: url('../../node_modules/flag-icons/flags/4x3/zm.svg'); }
+.country-flag-zw { background-image: url('../../node_modules/flag-icons/flags/4x3/zw.svg'); }

@@ -1,0 +1,13 @@
+.profile-settings-tab {
+  justify-content: center;
+  color: #5d6871;
+}
+
+.profile-settings-tab.is-active {
+  background: #121c2d;
+  color: #ffffff;
+}
+
+.profile-settings-tab:not(.is-active):hover {
+  background: #f1f3f4;
+}

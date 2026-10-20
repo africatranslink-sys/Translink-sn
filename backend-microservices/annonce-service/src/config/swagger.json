@@ -1,0 +1,142 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Translink-Africa API",
+    "version": "1.0.0",
+    "description": "API pour la plateforme logistique Translink-Africa"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000",
+      "description": "Serveur local"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/api/auth/register": {
+      "post": {
+        "summary": "Inscription d'un utilisateur",
+        "tags": ["Auth"],
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nom": { "type": "string" },
+                  "telephone_whatsapp": { "type": "string" },
+                  "email": { "type": "string" },
+                  "mot_de_passe": { "type": "string" },
+                  "ville": { "type": "string" },
+                  "role": { "type": "string", "enum": ["CHAUFFEUR", "ENTREPRISE", "CHARGEUR"] }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Utilisateur créé avec succès" }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "summary": "Connexion",
+        "tags": ["Auth"],
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "telephone_whatsapp": { "type": "string" },
+                  "mot_de_passe": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Connexion réussie" }
+        }
+      }
+    },
+    "/api/documents/upload": {
+      "post": {
+        "summary": "Téléverser un document KYC",
+        "tags": ["Documents"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type_document": { "type": "string" },
+                  "document": { "type": "string", "format": "binary" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Document téléversé avec succès" }
+        }
+      }
+    },
+    "/api/annonces/demandes": {
+      "post": {
+        "summary": "Publier une demande de transport (Chargeur)",
+        "tags": ["Annonces"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ville_depart": { "type": "string" },
+                  "ville_arrivee": { "type": "string" },
+                  "nature_marchandise": { "type": "string" },
+                  "tonnage": { "type": "number" },
+                  "type_camion_requis": { "type": "string" },
+                  "date_chargement": { "type": "string", "format": "date" },
+                  "heure_chargement": { "type": "string", "format": "time" },
+                  "exigences_particulieres": { "type": "string" },
+                  "prix_propose": { "type": "number" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Demande publiée" }
+        }
+      },
+      "get": {
+        "summary": "Voir les demandes actives",
+        "tags": ["Annonces"],
+        "responses": {
+          "200": { "description": "Liste des demandes" }
+        }
+      }
+    }
+  }
+}

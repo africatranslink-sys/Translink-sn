@@ -1,0 +1,23 @@
+{
+  "name": "backend-microservices",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run start:api\" \"npm run start:auth\" \"npm run start:annonce\" \"npm run start:course\"",
+    "dev": "npm start",
+    "start:api": "cd api-gateway && npm run dev",
+    "start:auth": "cd auth-service && npm run dev",
+    "start:annonce": "cd annonce-service && npm run dev",
+    "start:course": "cd course-service && npm run dev",
+    "db:migrate": "npm --prefix ../backend run db:migrate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "concurrently": "^10.0.5",
+    "redis": "^6.0.0"
+  }
+}

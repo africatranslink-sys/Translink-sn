@@ -1,0 +1,296 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Translink-Africa API",
+    "version": "1.0.0",
+    "description": "API pour la plateforme logistique Translink-Africa"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000",
+      "description": "Serveur local"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/api/auth/register": {
+      "post": {
+        "summary": "Inscription d'un utilisateur",
+        "tags": ["Auth"],
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nom": { "type": "string" },
+                  "telephone_whatsapp": { "type": "string" },
+                  "email": { "type": "string" },
+                  "mot_de_passe": { "type": "string" },
+                  "ville": { "type": "string" },
+                  "role": { "type": "string", "enum": ["CHAUFFEUR", "ENTREPRISE", "CHARGEUR"] }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Utilisateur créé avec succès" }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "summary": "Connexion",
+        "tags": ["Auth"],
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "telephone_whatsapp": { "type": "string" },
+                  "mot_de_passe": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Connexion réussie" }
+        }
+      }
+    },
+    "/api/documents/upload": {
+      "post": {
+        "summary": "Téléverser un document KYC",
+        "tags": ["Documents"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type_document": { "type": "string" },
+                  "document": { "type": "string", "format": "binary" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Document téléversé avec succès" }
+        }
+      }
+    },
+    "/api/annonces/demandes": {
+      "post": {
+        "summary": "Publier une demande de transport (Chargeur)",
+        "tags": ["Annonces"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ville_depart": { "type": "string" },
+                  "ville_arrivee": { "type": "string" },
+                  "nature_marchandise": { "type": "string" },
+                  "tonnage": { "type": "number" },
+                  "type_camion_requis": { "type": "string" },
+                  "date_chargement": { "type": "string", "format": "date" },
+                  "prix_propose": { "type": "number" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Demande publiée" }
+        }
+      },
+      "get": {
+        "summary": "Voir les demandes actives",
+        "tags": ["Annonces"],
+        "responses": {
+          "200": { "description": "Liste des demandes" }
+        }
+      }
+    },
+    "/api/camions": {
+      "post": {
+        "summary": "Ajouter un camion (Transporteur)",
+        "tags": ["Camions"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "immatriculation": { "type": "string" },
+                  "type_camion": { "type": "string" },
+                  "capacite_tonnes": { "type": "number" },
+                  "localisation_actuelle": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Camion ajouté" }
+        }
+      },
+      "get": {
+        "summary": "Voir ses camions",
+        "tags": ["Camions"],
+        "responses": {
+          "200": { "description": "Liste des camions" }
+        }
+      }
+    },
+    "/api/courses": {
+      "post": {
+        "summary": "Créer une nouvelle course",
+        "tags": ["Courses"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "demande_id": { "type": "number" },
+                  "transporteur_id": { "type": "number" },
+                  "camion_id": { "type": "number" },
+                  "prix_convenu": { "type": "number" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Course créée" }
+        }
+      },
+      "get": {
+        "summary": "Voir ses courses",
+        "tags": ["Courses"],
+        "responses": {
+          "200": { "description": "Liste des courses" }
+        }
+      }
+    },
+    "/api/courses/{id}/statut": {
+      "put": {
+        "summary": "Mettre à jour le statut d'une course",
+        "tags": ["Courses"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "number" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nouveau_statut": { "type": "string", "enum": ["EN_COURS", "TERMINEE", "ANNULEE"] }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Statut mis à jour" }
+        }
+      }
+    },
+    "/api/paiements/initier": {
+      "post": {
+        "summary": "Initier un paiement avec Wave/Orange Money",
+        "tags": ["Paiements"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "course_id": { "type": "number" },
+                  "methode_paiement": { "type": "string", "enum": ["WAVE", "ORANGE_MONEY"] }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Paiement initié, lien retourné" }
+        }
+      }
+    },
+    "/api/admin/stats": {
+      "get": {
+        "summary": "Voir les statistiques de la plateforme",
+        "tags": ["Admin"],
+        "responses": {
+          "200": { "description": "Statistiques retournées" }
+        }
+      }
+    },
+    "/api/admin/users/{id}/statut": {
+      "put": {
+        "summary": "Approuver ou bloquer un utilisateur",
+        "tags": ["Admin"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "number" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "statut": { "type": "string", "enum": ["ACTIF", "SUSPENDU", "EN_ATTENTE"] }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Statut de l'utilisateur mis à jour" }
+        }
+      }
+    }
+  }
+}

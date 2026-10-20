@@ -1,0 +1,77 @@
+.payment-account-card {
+  position: relative;
+  min-height: 224px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 18px;
+  box-shadow: 0 14px 28px rgba(21, 38, 43, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.24);
+  isolation: isolate;
+}
+
+.payment-card-wave { background: linear-gradient(135deg, #19b8e6 0%, #078fbd 58%, #086383 100%); }
+.payment-card-orange { background: linear-gradient(135deg, #ff7900 0%, #e96700 58%, #ad4600 100%); }
+.payment-card-paypal { background: linear-gradient(135deg, #003087 0%, #07549c 58%, #009cde 100%); }
+.payment-card-bank { background: linear-gradient(135deg, #274d57 0%, #203d49 58%, #1d303b 100%); }
+.payment-card-empty { background: linear-gradient(135deg, #687775 0%, #465a5b 100%); }
+
+.payment-card-pattern {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background-image: repeating-linear-gradient(132deg, transparent 0 26px, rgba(255, 255, 255, 0.035) 27px 28px, transparent 29px 52px);
+  pointer-events: none;
+}
+
+.payment-card-pattern::after {
+  content: "";
+  position: absolute;
+  width: 230px;
+  height: 230px;
+  top: -125px;
+  right: -45px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 50%;
+  box-shadow: 0 0 0 24px rgba(255, 255, 255, 0.035), 0 0 0 49px rgba(255, 255, 255, 0.025);
+}
+
+.payment-card-content {
+  position: relative;
+  min-height: 224px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 22px;
+}
+
+.payment-card-mark {
+  display: grid;
+  width: 37px;
+  height: 37px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 11px;
+  color: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.payment-card-chip {
+  width: 38px;
+  height: 28px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
+  background: linear-gradient(135deg, #d9c999, #a89b72);
+  opacity: 0.92;
+}
+
+.payment-card-chip span { border: 1px solid rgba(72, 69, 54, 0.4); }
+.payment-card-chip span:last-child { grid-column: 1 / -1; }
+
+@media (max-width: 640px) {
+  .payment-account-card,
+  .payment-card-content { min-height: 210px; }
+  .payment-card-content { padding: 18px; }
+}
